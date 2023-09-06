@@ -1,10 +1,12 @@
 use color_eyre::{eyre::eyre, Result};
 use std::io::{self, Read};
 
+type Int = i32;
+
 enum Instruction {
-    Forward(i32),
-    Down(i32),
-    Up(i32),
+    Forward(Int),
+    Down(Int),
+    Up(Int),
 }
 
 use Instruction::*;
@@ -14,7 +16,7 @@ struct Task {
 }
 
 impl Task {
-    fn part1(&self) -> i32 {
+    fn part1(&self) -> Int {
         let (mut i, mut j) = (0, 0);
 
         for ins in &self.instructions {
@@ -27,14 +29,32 @@ impl Task {
 
         i * j
     }
+
+    fn part2(&self) -> Int {
+        let (mut i, mut j, mut aim) = (0, 0, 0);
+
+        for ins in &self.instructions {
+            match ins {
+                Forward(v) => {
+                    j += v;
+                    i += aim * v;
+                }
+
+                Down(v) => aim += v,
+                Up(v) => aim -= v,
+            }
+        }
+
+        i * j
+    }
 }
 
 fn parse(s: &str) -> Result<Task> {
     let mut instructions = vec![];
 
     for line in s.trim().lines() {
-        let (ins, v) = line.trim().split_once(' ').unwrap();
-        let v = v.parse::<i32>().unwrap();
+        let (ins, v) = line.trim().split_once(' ').expect("a space");
+        let v = v.parse::<Int>()?;
 
         let ins = match ins {
             "forward" => Forward(v),
@@ -55,6 +75,7 @@ fn main() -> Result<()> {
     let task = parse(&s)?;
 
     println!("part 1: {}", task.part1());
+    println!("part 2: {}", task.part2());
 
     Ok(())
 }
@@ -88,8 +109,15 @@ mod tests {
     }
 
     #[test]
+    fn part2() {
+        let task = example();
+        assert_eq!(task.part2(), 900);
+    }
+
+    #[test]
     fn input() {
         let task = parse(include_str!("../data/input.txt")).unwrap();
         assert_eq!(task.part1(), 2027977);
+        assert_eq!(task.part2(), 1_903_644_897);
     }
 }
