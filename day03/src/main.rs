@@ -1,4 +1,42 @@
 // https://adventofcode.com/2021/day/3
+//
+// Reddit solution thread: https://www.reddit.com/r/adventofcode/comments/r7r0ff/2021_day_3_solutions/
+//
+// Research:
+//  - https://github.com/Crazytieguy/advent-of-code/blob/master/2021/src/bin/day3/main.rs
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn21o5u/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1axfc/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn344bb/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3a30c/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4bsaw/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn19xng/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3ud0u/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn43gfp/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4b4be/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4dv8s/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4kh9z/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4s5nf/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn52cck/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn5bc2i/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn5fm9q/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1ke7f/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1l4s9/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1l7ud/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1mtw7/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1oae9/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1ri7y/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn29nvf/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn2qss5/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn2tf3y/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn2vlnj/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn343ke/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn34v6g/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3887e/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3ko6i/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3o1lp/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3ohvh/
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3s24g/
+//
 use color_eyre::{Report, Result};
 use counter::Counter;
 use std::{
