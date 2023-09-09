@@ -25,12 +25,12 @@ struct Task {
 
 impl Task {
     fn part1(&self) -> usize {
-        let mut counter = Counter::<usize>::new();
+        let mut counts = Counter::<usize>::new();
 
         for &Reading(v) in &self.readings {
             let bits = (Int::BITS - v.leading_zeros()) as usize;
             for i in 0..bits {
-                counter[&i] += (1 & (v >> i)) as usize;
+                counts[&i] += (1 & (v >> i)) as usize;
             }
         }
 
@@ -38,7 +38,7 @@ impl Task {
         let n = self.readings.len() / 2;
         let (mut gamma, mut epsilon) = (0, 0);
 
-        for (i, count) in counter {
+        for (i, count) in counts {
             match count.cmp(&n) {
                 Ordering::Less => epsilon |= 1 << i,
                 Ordering::Equal => {}
@@ -47,6 +47,50 @@ impl Task {
         }
 
         epsilon * gamma
+    }
+
+    fn part2(&self) -> u32 {
+        let initial = self
+            .readings
+            .iter()
+            .map(|&Reading(v)| v)
+            .collect::<Vec<_>>();
+        let bits = initial
+            .iter()
+            .map(|&value| u32::BITS - value.leading_zeros())
+            .max()
+            .expect("a bit length");
+
+        let (mut ogr, mut csr) = (initial.clone(), initial);
+
+        for i in (0..bits).rev() {
+            if ogr.len() > 1 {
+                let (ones, zeros): (Vec<_>, Vec<_>) =
+                    ogr.iter().partition(|&&value| (1 & (value >> i)) == 1);
+
+                if ones.len() >= zeros.len() {
+                    ogr = ones;
+                } else {
+                    ogr = zeros;
+                }
+            }
+
+            if csr.len() > 1 {
+                let (ones, zeros): (Vec<_>, Vec<_>) =
+                    csr.iter().partition(|&&value| (1 & (value >> i)) == 1);
+
+                if zeros.len() <= ones.len() {
+                    csr = zeros;
+                } else {
+                    csr = ones;
+                }
+            }
+        }
+
+        debug_assert_eq!(ogr.len(), 1);
+        debug_assert_eq!(csr.len(), 1);
+
+        ogr[0] * csr[0]
     }
 }
 
@@ -65,6 +109,7 @@ fn main() -> Result<()> {
     let task = parse(&s)?;
 
     println!("part 1: {}", task.part1());
+    println!("part 2: {}", task.part2());
 
     Ok(())
 }
@@ -106,8 +151,15 @@ mod tests {
     }
 
     #[test]
+    fn part2() {
+        let task = example();
+        assert_eq!(task.part2(), 230);
+    }
+
+    #[test]
     fn input() {
         let task = parse(include_str!("../data/input.txt")).unwrap();
         assert_eq!(task.part1(), 3374136);
+        assert_eq!(task.part2(), 4432698);
     }
 }
