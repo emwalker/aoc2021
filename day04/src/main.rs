@@ -1,4 +1,15 @@
 // https://adventofcode.com/2021/day/4
+//
+// Research
+// https://www.reddit.com/r/adventofcode/comments/r8i1lq/2021_day_4_solutions/
+//
+// Other solutions:
+//  - https://github.com/Crazytieguy/advent-of-code/blob/master/2021/src/bin/day4/main.rs
+//  - https://www.reddit.com/r/adventofcode/comments/r8i1lq/comment/hn7y21w/
+//  - https://www.reddit.com/r/adventofcode/comments/r8i1lq/comment/hn8q7pt/
+//  - https://www.reddit.com/r/adventofcode/comments/r8i1lq/comment/hn5zor9/
+//  - https://www.reddit.com/r/adventofcode/comments/r8i1lq/comment/hn7k99s/
+//
 use color_eyre::{eyre::eyre, Result};
 use itertools::Itertools;
 use nom::{
