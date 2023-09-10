@@ -4,31 +4,56 @@
 //
 // Research:
 //  - https://github.com/Crazytieguy/advent-of-code/blob/master/2021/src/bin/day3/main.rs
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn21o5u/
+//    Revisit.  Concise bit arithmetic.  take_while.  Deriving epsilon from gamma.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1axfc/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn344bb/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3a30c/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4bsaw/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn19xng/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3ud0u/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn43gfp/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4b4be/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4dv8s/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4kh9z/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4s5nf/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn52cck/
+//    Revisit.  Very concise bit arithmetic.  Makes assumptions about input.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn5bc2i/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn5fm9q/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1ke7f/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1l4s9/
+//    Revisit. Use of fold((0, 0), ...)
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1l7ud/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1mtw7/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1oae9/
-//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1ri7y/
+//    Revisit. split_whitespace, .map(Result::unwrap). let [value] = *values.
+//    partition helper.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn29nvf/
+//    Revisit.  Uses one-line combinators for part 2.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4bsaw/
+//    slice::sort_unstable.  Binary search.  Derived epsilon.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn19xng/
+//    iter::nth.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn43gfp/
+//    Concise.  iter::max_by_key.  iter::fold.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4dv8s/
+//    vec::retain.  Does not convert to ints until late.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4kh9z/
+//    iter::partition.  Derived epsilon.  vec::retain.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4s5nf/
+//    iter::fold.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1mtw7/
+//    Uses several closures.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1ri7y/
+//    flat_map(... result.ok()).  it.peek().  vec::retain.  Derived epsilon.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn2qss5/
+//    Very concise solution for part 2.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn2tf3y/
+//    enum { MostCommon, LeastCommon }. iter::take.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn2vlnj/
+//    Uses combinators for everything.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1oae9/
+//    Concise.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1l4s9/
+//    vec::retain.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn1ke7f/
+//    gamma.iter().fold(0, |acc, b| acc * 2 + b).
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn5fm9q/
+//    Fairly complex bit arithmetic.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn4b4be/
+//    Uses a "digit bias".
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3ud0u/
+//    Does not parse input into ints.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3a30c/
+//    SIMD for part 1.  slice::advance.
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn344bb/
+//    char::to_digit(2).
+//  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn21o5u/
+//    Goes back and forth between string and binary representations.
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn343ke/
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn34v6g/
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3887e/
@@ -37,10 +62,17 @@
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3ohvh/
 //  - https://www.reddit.com/r/adventofcode/comments/r7r0ff/comment/hn3s24g/
 //
+// TODO:
+//  - Derive epsilon
+//  - fold((0, 0), ...)
+//  - split_whitepsace
+//  - let [value] = *values
+//  - partition helper
+//  - vec::retain?
+//
 use color_eyre::{Report, Result};
-use counter::Counter;
+use itertools::Itertools;
 use std::{
-    cmp::Ordering,
     io::{self, Read},
     str::FromStr,
 };
@@ -59,76 +91,51 @@ impl FromStr for Reading {
 
 struct Task {
     readings: Vec<Reading>,
+    num_bits: usize,
 }
 
+// https://github.com/Crazytieguy/advent-of-code/blob/master/2021/src/bin/day3/main.rs
 impl Task {
     fn part1(&self) -> usize {
-        let mut counts = Counter::<usize>::new();
-
-        for &Reading(v) in &self.readings {
-            let bits = (Int::BITS - v.leading_zeros()) as usize;
-            for i in 0..bits {
-                counts[&i] += (1 & (v >> i)) as usize;
-            }
-        }
-
         debug_assert!(self.readings.len() % 2 == 0);
         let n = self.readings.len() / 2;
-        let (mut gamma, mut epsilon) = (0, 0);
 
-        for (i, count) in counts {
-            match count.cmp(&n) {
-                Ordering::Less => epsilon |= 1 << i,
-                Ordering::Equal => {}
-                Ordering::Greater => gamma |= 1 << i,
-            }
-        }
+        let gamma = (0..self.num_bits)
+            .map(|i| 1 << i)
+            .filter(|mask| {
+                self.readings
+                    .iter()
+                    .filter(|&Reading(v)| v & mask != 0)
+                    .count()
+                    > n
+            })
+            .fold(0, |gamma, mask| gamma | mask) as usize;
 
-        epsilon * gamma
+        let mask = (1 << self.num_bits) - 1;
+        gamma * (!gamma & mask)
     }
 
-    fn part2(&self) -> u32 {
-        let initial = self
-            .readings
-            .iter()
-            .map(|&Reading(v)| v)
-            .collect::<Vec<_>>();
-        let bits = initial
-            .iter()
-            .map(|&value| u32::BITS - value.leading_zeros())
-            .max()
-            .expect("a bit length");
+    fn part2(&self) -> usize {
+        self.rating(true) * self.rating(false)
+    }
 
-        let (mut ogr, mut csr) = (initial.clone(), initial);
+    fn rating(&self, bit_criterion: bool) -> usize {
+        let mut remaining = self.readings.iter().map(|&Reading(v)| v).collect_vec();
 
-        for i in (0..bits).rev() {
-            if ogr.len() > 1 {
-                let (ones, zeros): (Vec<_>, Vec<_>) =
-                    ogr.iter().partition(|&&value| (1 & (value >> i)) == 1);
-
-                if ones.len() >= zeros.len() {
-                    ogr = ones;
-                } else {
-                    ogr = zeros;
-                }
-            }
-
-            if csr.len() > 1 {
-                let (ones, zeros): (Vec<_>, Vec<_>) =
-                    csr.iter().partition(|&&value| (1 & (value >> i)) == 1);
-
-                if zeros.len() <= ones.len() {
-                    csr = zeros;
-                } else {
-                    csr = ones;
-                }
+        for i in (0..self.num_bits).rev() {
+            let mask = 1 << i;
+            let mut groups = remaining.into_iter().into_group_map_by(|v| v & mask);
+            remaining = if bit_criterion == (groups[&mask].len() >= groups[&0].len()) {
+                groups.remove(&mask).unwrap()
+            } else {
+                groups.remove(&0).unwrap()
+            };
+            if remaining.len() == 1 {
+                return remaining[0] as usize;
             }
         }
 
-        debug_assert_eq!(ogr.len(), 1);
-        debug_assert_eq!(csr.len(), 1);
-
-        ogr[0] * csr[0]
+        unreachable!()
     }
 }
 
@@ -138,7 +145,14 @@ fn parse(s: &str) -> Result<Task> {
         .lines()
         .map(|l| l.trim().parse::<Reading>().expect("not a binary number"))
         .collect::<Vec<_>>();
-    Ok(Task { readings })
+
+    let num_bits = readings
+        .iter()
+        .map(|&Reading(value)| (u32::BITS - value.leading_zeros()) as usize)
+        .max()
+        .expect("a bit length");
+
+    Ok(Task { readings, num_bits })
 }
 
 fn main() -> Result<()> {
