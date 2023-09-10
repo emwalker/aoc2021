@@ -10,7 +10,7 @@ use nom::{
     Finish, IResult,
 };
 use std::{
-    collections::{HashMap, HashSet},
+    collections::{HashMap, HashSet, VecDeque},
     io::{self, Read},
 };
 
@@ -106,6 +106,32 @@ impl Task {
 
         unreachable!()
     }
+
+    fn part2(&self) -> Int {
+        let mut boards = self
+            .boards
+            .iter()
+            .map(BoardState::from)
+            .collect::<VecDeque<_>>();
+
+        for m in &self.moves {
+            for _ in 0..boards.len() {
+                let mut board = boards.pop_front().unwrap();
+                board.add(m);
+
+                if board.row_complete() {
+                    if boards.is_empty() {
+                        let unmarked = board.unmarked_numbers().sum::<Int>();
+                        return m.0 * unmarked;
+                    }
+                } else {
+                    boards.push_back(board);
+                }
+            }
+        }
+
+        unreachable!()
+    }
 }
 
 fn parse_row(s: &str) -> IResult<&str, Row> {
@@ -159,6 +185,7 @@ fn main() -> Result<()> {
     let task = parse(&s)?;
 
     println!("part 1: {}", task.part1());
+    println!("part 2: {}", task.part2());
 
     Ok(())
 }
@@ -185,8 +212,15 @@ mod tests {
     }
 
     #[test]
+    fn part2() {
+        let task = example();
+        assert_eq!(task.part2(), 1924);
+    }
+
+    #[test]
     fn input() {
         let task = parse(include_str!("../data/input.txt")).unwrap();
         assert_eq!(task.part1(), 39902);
+        assert_eq!(task.part2(), 26936);
     }
 }
